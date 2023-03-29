@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "6dba5cd0-3001-470c-8e33-bceb53de9d64",
+		"name": "AWS.Samples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"gitHubUsername\": \"cody-at-github\",\r\n  \"fullName\": \"Cody Skidmore\",\r\n  \"email\": \"cody@codewonk.com\",\r\n  \"dateOfBirth\": \"1990-03-28T18:54:14.470Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/customers",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/customers/fcd4f27f-8cbc-4057-b79d-474ae21423c8",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"customers",
+						"fcd4f27f-8cbc-4057-b79d-474ae21423c8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/customers/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"customers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"gitHubUsername\": \"cody-at-github\",\r\n            \"fullName\": \"Cody Skidmore\",\r\n            \"email\": \"cody@codewonk.com\",\r\n            \"dateOfBirth\": \"1991-03-28T18:54:14.47\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/customers/fcd4f27f-8cbc-4057-b79d-474ae21423c8",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"customers",
+						"fcd4f27f-8cbc-4057-b79d-474ae21423c8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Customer",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/customers/fcd4f27f-8cbc-4057-b79d-474ae21423c8",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"customers",
+						"fcd4f27f-8cbc-4057-b79d-474ae21423c8"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

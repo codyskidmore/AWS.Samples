@@ -1,5 +1,7 @@
 ﻿namespace Customers.Api.Contracts.Messaging;
 
+// Usually shared in a Nuget package.
+
 public class CustomerCreated
 {
     public required Guid Id { get; init; }

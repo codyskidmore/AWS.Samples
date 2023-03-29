@@ -37,6 +37,7 @@ builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddSingleton<IGitHubService, GitHubService>();
 
+// See https://github.com/codyskidmore/OptionsExample
 builder.Services.Configure<QueueOptions>(
     builder.Configuration.GetSection(nameof(QueueOptions)));
 

@@ -11,14 +11,16 @@ public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IGitHubService _gitHubService;
-    private readonly ISqsMessenger _sqsMessenger;
+    private readonly ISnsMessenger _snsMessenger;
+    private readonly ILogger<CustomerService> _logger;
 
     public CustomerService(ICustomerRepository customerRepository, 
-        IGitHubService gitHubService, ISqsMessenger sqsMessenger)
+        IGitHubService gitHubService, ISnsMessenger snsMessenger, ILogger<CustomerService> logger)
     {
         _customerRepository = customerRepository;
         _gitHubService = gitHubService;
-        _sqsMessenger = sqsMessenger;
+        _snsMessenger = snsMessenger;
+        _logger = logger;
     }
 
     public async Task<bool> CreateAsync(Customer customer, CancellationToken token)
@@ -44,7 +46,8 @@ public class CustomerService : ICustomerService
 
         if (response)
         {
-            await _sqsMessenger.SendMessageAsync(customer.ToCustomerCreatedMessage(), token);
+            await _snsMessenger.PublishMessageAsync(customer.ToCustomerCreatedMessage(), token);
+            _logger.LogInformation($"Published Create message: {customerDto.FullName}");
         }
 
         return response;
@@ -78,7 +81,8 @@ public class CustomerService : ICustomerService
 
         if (response)
         {
-            await _sqsMessenger.SendMessageAsync(customer.ToCustomerUpdatedMessage(), token);
+            await _snsMessenger.PublishMessageAsync(customer.ToCustomerUpdatedMessage(), token);
+            _logger.LogInformation($"Published Update message: {customerDto.FullName}");
         }
 
         return response;
@@ -90,7 +94,7 @@ public class CustomerService : ICustomerService
 
         if (response)
         {
-            await _sqsMessenger.SendMessageAsync(new CustomerDeleted
+            await _snsMessenger.PublishMessageAsync(new CustomerDeleted
             {
                 Id = id
             }, token);

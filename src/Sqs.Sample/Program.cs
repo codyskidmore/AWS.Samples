@@ -5,7 +5,11 @@ using Amazon.SQS;
 using Amazon.SQS.Model;
 using Sqs.Sample;
 
-await RunConsumer();
+
+// Little hackish but making sure we actually use correct queue names
+var queueName = args.Length == 1 ? "customers-sqs-2" : "customers-sqs";
+
+await RunConsumer(queueName);
 
 return; // allows us to pause and check results before exiting. 
 
@@ -57,12 +61,12 @@ static async Task RunPublisher()
     Console.WriteLine(response);   
 }
 
-static async Task RunConsumer()
+static async Task RunConsumer(string sqsQueueName)
 {
     var cts = new CancellationTokenSource();
     var sqsClient = new AmazonSQSClient();
 
-    var queueUrlResponse = await sqsClient.GetQueueUrlAsync("customers-sqs");
+    var queueUrlResponse = await sqsClient.GetQueueUrlAsync(sqsQueueName);
 
     var receiveMessageRequest = new ReceiveMessageRequest
     {

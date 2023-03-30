@@ -11,7 +11,6 @@ builder.Services.AddSingleton<IAmazonSQS, AmazonSQSClient>();
 builder.Services.AddHostedService<SqsConsumerService>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 
-
 var app = builder.Build();
 
 //app.MapGet("/", () => "Hello World!");

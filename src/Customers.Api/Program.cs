@@ -1,3 +1,4 @@
+using Amazon.DynamoDBv2;
 using Amazon.SimpleNotificationService;
 using Customers.Api.Contracts.Messaging;
 using Customers.Api.Database;
@@ -30,12 +31,10 @@ SqlMapper.AddTypeHandler(new GuidTypeHandler());
 SqlMapper.RemoveTypeMap(typeof(Guid));
 SqlMapper.RemoveTypeMap(typeof(Guid?));
 
-builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
-    new SqliteConnectionFactory(config.GetValue<string>("Database:ConnectionString")!));
-builder.Services.AddSingleton<DatabaseInitializer>();
 builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddSingleton<IGitHubService, GitHubService>();
+builder.Services.AddSingleton<IAmazonDynamoDB,AmazonDynamoDBClient>();
 
 // See https://github.com/codyskidmore/OptionsExample
 builder.Services.Configure<TopicOptions>(
@@ -65,8 +64,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseMiddleware<ValidationExceptionMiddleware>();
 app.MapControllers();
-
-var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
-await databaseInitializer.InitializeAsync();
 
 app.Run();
